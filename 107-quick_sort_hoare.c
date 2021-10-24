@@ -68,8 +68,7 @@ int partition(int *array, int low, int high, size_t size)
 			;
 		if (new_pivot >= index)
 			break;
-		if (new_pivot != index)
-			swap(array, new_pivot, index, size);
+		swap(array, new_pivot, index, size);
 	}
 	if (new_pivot != high)
 		swap(array, new_pivot, high, size);
