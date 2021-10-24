@@ -55,22 +55,23 @@ void quick_sort_rec(int *array, int low, int high, size_t size)
  */
 int partition(int *array, int low, int high, size_t size)
 {
-	int pivot, index;
+	int pivot, index, new_pivot;
 
-	pivot = low;
+	pivot = array[high];
+	new_pivot = low;
 	for (index = low; index < high; ++index)
 	{
-		if (array[index] < array[high])
+		if (array[index] < pivot)
 		{
-			if (index != pivot)
-				swap(array, pivot, index, size);
-			pivot++;
+			if (index != new_pivot)
+				swap(array, new_pivot, index, size);
+			new_pivot++;
 		}
 	}
-	if (pivot != high)
-		swap(array, pivot, high, size);
+	if (new_pivot != high)
+		swap(array, new_pivot, high, size);
 
-	return (pivot);
+	return (new_pivot);
 }
 
 /**
