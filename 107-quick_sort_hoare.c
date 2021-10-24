@@ -70,7 +70,8 @@ int partition(int *array, int low, int high, size_t size)
 			break;
 		swap(array, new_pivot, index, size);
 	}
-	swap(array, new_pivot, high, size);
+	if (new_pivot != high)
+		swap(array, new_pivot, high, size);
 
 	return (new_pivot);
 }
