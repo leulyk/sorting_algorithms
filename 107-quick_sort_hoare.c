@@ -38,7 +38,7 @@ void quick_sort_rec(int *array, int low, int high, size_t size)
 	if (low >= high)
 		return;
 	pivot = partition(array, low, high, size);
-	quick_sort_rec(array, low, pivot - 1, size);
+	quick_sort_rec(array, low, pivot, size);
 	quick_sort_rec(array, pivot + 1, high, size);
 }
 
@@ -58,22 +58,19 @@ int partition(int *array, int low, int high, size_t size)
 	int pivot, new_pivot, index;
 
 	pivot = array[high];
-	new_pivot = low - 1;
-	index = high;
+	new_pivot = high + 1;
+	index = low - 1;
 	while (1)
 	{
-		while (array[++new_pivot] < pivot)
+		while (array[++index] < pivot)
 			;
-		while (pivot < array[--index])
+		while (pivot < array[--new_pivot])
 			;
-		if (new_pivot >= index)
-			break;
-		swap(array, new_pivot, index, size);
+		if (new_pivot < index)
+			return (new_pivot);
+		if (new_pivot != index)
+			swap(array, new_pivot, index, size);
 	}
-	if (new_pivot != high)
-		swap(array, new_pivot, high, size);
-
-	return (new_pivot);
 }
 /**
  * swap - swaps two elements of an array
