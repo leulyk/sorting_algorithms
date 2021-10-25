@@ -14,6 +14,8 @@ void shell_sort(int *array, size_t size)
 	unsigned int gap = 1, i;
 	int temp, j, swapped = 0;
 
+	if (size < 2 || !array)
+		return;
 	while (gap < size)
 		gap = gap * 3 + 1;
 	for (; gap > 0; gap /= 3)
