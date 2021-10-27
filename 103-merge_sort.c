@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include "sort.h"
 
-void merge_sort_main(int *array, int *temp, int low, int high, int size);
-void merge(int *array, int *temp, int low, int mid, int high, int size);
+void merge_sort_main(int *array, int *temp, int low, int high);
+void merge(int *array, int *temp, int low, int mid, int high);
+void print_array_range(int *array, int low, int high, char *title);
 char *_memcpy(char *dest, char *src, unsigned int n);
 
 /**
@@ -21,9 +22,8 @@ void merge_sort(int *array, size_t size)
 	if (!temparray)
 		return;
 	_memcpy((char *)temparray, (char *)array, size * sizeof(int));
-	print_array(temparray, size);
 
-	merge_sort_main(array, temparray, 0, size - 1, size);
+	merge_sort_main(array, temparray, 0, size - 1);
 
 	free(temparray);
 }
@@ -35,19 +35,18 @@ void merge_sort(int *array, size_t size)
  * @low: the lowest index
  * @high: the highest index
  * @temp: temp array to to work on the merging
- * @size: size of the array
  *
  */
-void merge_sort_main(int *array, int *temp, int low, int high, int size)
+void merge_sort_main(int *array, int *temp, int low, int high)
 {
 	int mid;
 
 	if (low < high)
 	{
-		mid = low + (high - low) / 2;
-		merge_sort_main(array, temp, low, mid, size);
-		merge_sort_main(array, temp, mid + 1, high, size);
-		merge(array, temp, low, mid, high, size);
+		mid = (low + high) / 2;
+		merge_sort_main(array, temp, low, mid);
+		merge_sort_main(array, temp, mid + 1, high);
+		merge(array, temp, low, mid, high);
 	}
 	/**
 	* ----------------- Bottom up implementation -------------------
@@ -71,7 +70,7 @@ void merge_sort_main(int *array, int *temp, int low, int high, int size)
 	*		k = i + 2 * j - 1;
 	*		to = k < high ? k : high;
 	*
-	*		merge(array, temp, from, mid, to, size);
+	*		merge(array, temp, from, mid, to);
 	*	}
 	*}
 	*/
@@ -85,32 +84,17 @@ void merge_sort_main(int *array, int *temp, int low, int high, int size)
  * @low: the lowest index
  * @mid: the middle index
  * @high: the highest index
- * @size: size of the array
  *
  */
-void merge(int *array, int *temp, int low, int mid, int high, int size)
+void merge(int *array, int *temp, int low, int mid, int high)
 {
 	int i, j, k;
 
-	printf("Merging...\n");
-	printf("[left]: ");
-	for (i = low; i <= mid; ++i)
-	{
-		printf("%d", array[i]);
-		if (i != mid)
-			printf(", ");
-	}
-	printf("\n");
-	printf("[right]: ");
-	for (i = mid + 1; i <= high; ++i)
-	{
-		printf("%d", array[i]);
-		if (i != high)
-			printf(", ");
-	}
-	printf("\n");
-
 	i = low, j = mid + 1, k = low;
+
+	print_array_range(array, low, mid, "Merging...\n[left]: ");
+	print_array_range(array, mid + 1, high, "[right]: ");
+
 	while (i <= mid && j <= high)
 	{
 		if (array[i] < array[j])
@@ -118,14 +102,36 @@ void merge(int *array, int *temp, int low, int mid, int high, int size)
 		else
 			temp[k++] = array[j++];
 	}
-	while (i < size && i <= mid)
+	while (i <= mid)
 		temp[k++] = array[i++];
 	for (i = low; i <= high; i++)
 		array[i] = temp[i];
 
-	printf("[Done]: ");
-	print_array(array, high - low + 1);
+	print_array_range(array, low, high, "[Done]: ");
+}
 
+/**
+ * print_array_range - modified version of print array to print
+ * elements in a specified range
+ *
+ * @array: the array to print the elements from
+ * @low: lowest index
+ * @high: highest index
+ * @title: title to print before the array
+ *
+ */
+void print_array_range(int *array, int low, int high, char *title)
+{
+	int i;
+
+	printf("%s", title);
+	for (i = low; i <= high; ++i)
+	{
+		printf("%d", array[i]);
+		if (i != high)
+			printf(", ");
+	}
+	printf("\n");
 }
 
 /**
