@@ -12,7 +12,7 @@
 void shell_sort(int *array, size_t size)
 {
 	unsigned int gap = 1, i;
-	int temp, j, swapped = 0;
+	int temp, j, decreased = 0;
 
 	if (size < 2 || !array)
 		return;
@@ -29,10 +29,10 @@ void shell_sort(int *array, size_t size)
 				temp = array[j];
 				array[j] = array[j + gap];
 				array[j + gap] = temp;
-				swapped = 1;
 			}
 		}
-		if (swapped)
+		if (decreased)
 			print_array(array, size);
+		decreased = 1;
 	}
 }
