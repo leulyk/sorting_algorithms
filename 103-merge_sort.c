@@ -48,32 +48,6 @@ void merge_sort_main(int *array, int *temp, int low, int high)
 		merge_sort_main(array, temp, mid + 1, high);
 		merge(array, temp, low, mid, high);
 	}
-	/**
-	* ----------------- Bottom up implementation -------------------
-	* Divide the array into blocks of size `j`
-	* j = [1, 2, 4, 8, 16…]
-	* - for j = 1, i = 0, 2, 4, 6, 8…
-	* - for j = 2, i = 0, 4, 8…
-	* - for j = 4, i = 0, 8…
-	* - …
-	*
-	*** Code:
-	*
-	*int i, j, k, from, mid, to;
-	*
-	*for (j = 1; j <= high - low; j = 2 * j)
-	*{
-	*	for (i = low; i < high; i += 2 * j)
-	*	{
-	*		from = i;
-	*		mid = i + j - 1;
-	*		k = i + 2 * j - 1;
-	*		to = k < high ? k : high;
-	*
-	*		merge(array, temp, from, mid, to);
-	*	}
-	*}
-	*/
 }
 
 /**
