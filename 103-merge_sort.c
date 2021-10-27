@@ -43,7 +43,7 @@ void merge_sort_main(int *array, int *temp, int low, int high)
 
 	if (low < high)
 	{
-		mid = (low + high) / 2;
+		mid = (low + high - 1) / 2;
 		merge_sort_main(array, temp, low, mid);
 		merge_sort_main(array, temp, mid + 1, high);
 		merge(array, temp, low, mid, high);
