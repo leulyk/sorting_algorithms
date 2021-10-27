@@ -68,7 +68,7 @@ int partition(int *array, int low, int high, size_t size)
 			new_pivot++;
 		}
 	}
-	if (new_pivot != high)
+	if (new_pivot != high && array[new_pivot] != array[high])
 		swap(array, new_pivot, high, size);
 
 	return (new_pivot);
